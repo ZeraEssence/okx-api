@@ -90,7 +90,7 @@ export class AppService {
   async estimatePrice(body): Promise<{estimatedPrice: number, expirationDate: Date, orderId: number}> {
     const orderBooks: {asks: {}, bids: {}} = await this.getOrderBooks(body.pair)
     if (!orderBooks) {
-      throw new HttpException('Could not estimate price. Please, verify the entered pair', HttpStatus.BAD_REQUEST)
+      throw new HttpException('Could not estimate price. Please, verify the entered pair. It may be possible that the entered pair is not available.', HttpStatus.BAD_REQUEST)
     }
     if (body.side !== 'buy' && body.side !== 'sell') {
       throw new HttpException('Could not estimate price. Please, enter a valid side (buy/sell)', HttpStatus.BAD_REQUEST)
