@@ -15,7 +15,7 @@ This is an API that uses OKX to estimate trade prices and execute orders.
 
     npm run test:e2e
     
-## Variables de entorno
+## ENV vars
 
     OKX_URL = API Url
     API_KEY = API Key
