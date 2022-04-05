@@ -17,17 +17,17 @@ This is an API that uses OKX to estimate trade prices and execute orders.
     
 ## Variables de entorno
 
-    OKX_URL = OKX Url
-    API_KEY = OKX API Key
-    SECRET_KEY = OKX API Secret Key
-    OK_ACCESS_PASSPHRASE = OKX API Passphrase
+    OKX_URL = API Url
+    API_KEY = API Key
+    SECRET_KEY = API Secret Key
+    OK_ACCESS_PASSPHRASE = API Passphrase
     OPERATING_FEE= Desired fee to add to total price ( 0.01 = 1% )
     SPREAD= Desired spread to add to total price ( 0.01 = 1% )
     EXPIRATION_SECONDS= Seconds to add to order expiration date (Expiration date: Current date + EXPIRATION_SECONDS)
 
 # REST API
 
-This is an example of how the service works
+This is an example of how the service works:
 
 ## Estimate a price
 
