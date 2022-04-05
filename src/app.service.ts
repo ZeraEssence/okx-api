@@ -77,7 +77,7 @@ export class AppService {
       throw new HttpException(OkxOrder.sMsg, HttpStatus.BAD_REQUEST)
     }
     const averagePrice = await this.getOrderAveragePrice(estimatedOrder.pair, OkxOrder.ordId)
-    const finalPrice = this.utils.calculateFees(estimatedOrder.side as 'buy' | 'sell', averagePrice)
+    const finalPrice = +(this.utils.calculateFees(estimatedOrder.side as 'buy' | 'sell', averagePrice).toFixed(5))
     await ExecutedOrder.create({
       estimatedOrderId: estimatedOrder.id,
       okexOrderId: OkxOrder.ordId,
@@ -95,7 +95,7 @@ export class AppService {
     if (body.side !== 'buy' && body.side !== 'sell') {
       throw new HttpException('Could not estimate price. Please, enter a valid side (buy/sell)', HttpStatus.BAD_REQUEST)
     }
-    const estimatedPrice: number = this.utils.calculatePriceEstimation(body.volume, body.side, orderBooks)
+    const estimatedPrice: number = +(this.utils.calculatePriceEstimation(body.volume, body.side, orderBooks).toFixed(5))
     if (!estimatedPrice) {
       throw new HttpException('Could not estimate price. Please, verify the entered volume', HttpStatus.BAD_REQUEST)
     }
