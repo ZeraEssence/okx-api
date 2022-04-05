@@ -27,7 +27,7 @@ This is an API that uses OKX to estimate trade prices and execute orders.
 
 # REST API
 
-This is an example of how the service works
+This is an example of how the service works:
 
 ## Estimate a price
 
