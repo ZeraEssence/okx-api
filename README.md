@@ -1,73 +1,71 @@
-<p align="center">
-  <a href="http://nestjs.com/" target="blank"><img src="https://nestjs.com/img/logo_text.svg" width="320" alt="Nest Logo" /></a>
-</p>
+# OKX Exchange API
 
-[circleci-image]: https://img.shields.io/circleci/build/github/nestjs/nest/master?token=abc123def456
-[circleci-url]: https://circleci.com/gh/nestjs/nest
+This is an API that uses OKX to estimate trade prices and execute orders.
 
-  <p align="center">A progressive <a href="http://nodejs.org" target="_blank">Node.js</a> framework for building efficient and scalable server-side applications.</p>
-    <p align="center">
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/v/@nestjs/core.svg" alt="NPM Version" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/l/@nestjs/core.svg" alt="Package License" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/dm/@nestjs/common.svg" alt="NPM Downloads" /></a>
-<a href="https://circleci.com/gh/nestjs/nest" target="_blank"><img src="https://img.shields.io/circleci/build/github/nestjs/nest/master" alt="CircleCI" /></a>
-<a href="https://coveralls.io/github/nestjs/nest?branch=master" target="_blank"><img src="https://coveralls.io/repos/github/nestjs/nest/badge.svg?branch=master#9" alt="Coverage" /></a>
-<a href="https://discord.gg/G7Qnnhy" target="_blank"><img src="https://img.shields.io/badge/discord-online-brightgreen.svg" alt="Discord"/></a>
-<a href="https://opencollective.com/nest#backer" target="_blank"><img src="https://opencollective.com/nest/backers/badge.svg" alt="Backers on Open Collective" /></a>
-<a href="https://opencollective.com/nest#sponsor" target="_blank"><img src="https://opencollective.com/nest/sponsors/badge.svg" alt="Sponsors on Open Collective" /></a>
-  <a href="https://paypal.me/kamilmysliwiec" target="_blank"><img src="https://img.shields.io/badge/Donate-PayPal-ff3f59.svg"/></a>
-    <a href="https://opencollective.com/nest#sponsor"  target="_blank"><img src="https://img.shields.io/badge/Support%20us-Open%20Collective-41B883.svg" alt="Support us"></a>
-  <a href="https://twitter.com/nestframework" target="_blank"><img src="https://img.shields.io/twitter/follow/nestframework.svg?style=social&label=Follow"></a>
-</p>
-  <!--[![Backers on Open Collective](https://opencollective.com/nest/backers/badge.svg)](https://opencollective.com/nest#backer)
-  [![Sponsors on Open Collective](https://opencollective.com/nest/sponsors/badge.svg)](https://opencollective.com/nest#sponsor)-->
+## Install
 
-## Description
+    npm install
+    docker-compose up
 
-[Nest](https://github.com/nestjs/nest) framework TypeScript starter repository.
+## Run the app
 
-## Installation
+    npm run start
 
-```bash
-$ npm install
-```
+## Run the tests
 
-## Running the app
+    npm run test:e2e
+    
+## Variables de entorno
 
-```bash
-# development
-$ npm run start
+    OKX_URL = OKX Url
+    API_KEY = OKX API Key
+    SECRET_KEY = OKX API Secret Key
+    OK_ACCESS_PASSPHRASE = OKX API Passphrase
+    OPERATING_FEE= Desired fee to add to total price ( 0.01 = 1% )
+    SPREAD= Desired spread to add to total price ( 0.01 = 1% )
+    EXPIRATION_SECONDS= Seconds to add to order expiration date (Expiration date: Current date + EXPIRATION_SECONDS)
 
-# watch mode
-$ npm run start:dev
+# REST API
 
-# production mode
-$ npm run start:prod
-```
+This is an example of how the service works
 
-## Test
+## Estimate a price
 
-```bash
-# unit tests
-$ npm run test
+This endpoint estimates a price given a pair, volume and side. It returns the estimated price, the estimation expiration date, and the estimation order ID, to execute it later.
 
-# e2e tests
-$ npm run test:e2e
+### Request
 
-# test coverage
-$ npm run test:cov
-```
+`POST api/estimate-price/`
 
-## Support
+    body: {
+      "pair": "BTC-USDT",
+      "volume": 1.2,
+      "side": "buy"
+    }
 
-Nest is an MIT-licensed open source project. It can grow thanks to the sponsors and support by the amazing backers. If you'd like to join them, please [read more here](https://docs.nestjs.com/support).
+### Response
 
-## Stay in touch
+    {
+      "estimatedPrice": 46263.9664875,
+      "expirationDate": "2022-04-05T18:48:57.537Z",
+      "orderId": 5
+    }
 
-- Author - [Kamil Myśliwiec](https://kamilmysliwiec.com)
-- Website - [https://nestjs.com](https://nestjs.com/)
-- Twitter - [@nestframework](https://twitter.com/nestframework)
+## Execute an order
 
-## License
+This endpoint receives an order ID, to execute an estimated order, with its pair and volume. It returns the estimated and executed price.
 
-Nest is [MIT licensed](LICENSE).
+### Request
+
+`POST api/place-order/`
+
+    body: {
+      orderId: 5
+    }
+
+### Response
+
+    {
+      "estimatedPrice": 46263.9664875,
+      "executedPrice": 46269.12733874999
+    }
