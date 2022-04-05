@@ -15,7 +15,7 @@ This is an API that uses OKX to estimate trade prices and execute orders.
 
     npm run test:e2e
     
-## Variables de entorno
+## ENV vars
 
     OKX_URL = API Url
     API_KEY = API Key
@@ -31,7 +31,7 @@ This is an example of how the service works:
 
 ## Estimate a price
 
-This endpoint estimates a price given a pair, volume and side. It returns the estimated price, the estimation expiration date, and the estimation order ID, to execute it later.
+This endpoint estimates a price given a pair, volume and side. It returns an estimated price, an estimation expiration date, and an estimation order ID, to execute it later.
 
 ### Request
 
