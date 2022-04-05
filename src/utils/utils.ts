@@ -44,9 +44,9 @@ export class Utils {
 
   calculateFees(side: 'buy' | 'sell', price: number): number {
     if (side === 'buy') {
-      return +(price * (1 + +process.env.BELO_FEE )) * (1 + +process.env.SPREAD)
+      return +(price * (1 + +process.env.OPERATING_FEE )) * (1 + +process.env.SPREAD)
     } else {
-      return +(price * (1 - +process.env.BELO_FEE )) * (1 - +process.env.SPREAD)
+      return +(price * (1 - +process.env.OPERATING_FEE )) * (1 - +process.env.SPREAD)
     }
   }
 
