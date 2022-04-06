@@ -7,11 +7,11 @@ export class AppController {
   
   @Post('/place-order')
   placerOrder(@Body() body) {
-    return this.appService.executeOrder(body.orderId);
+    return this.appService.executeOrder(body.orderId)
   }
 
   @Post('/estimate-price')
   estimatePrice(@Body() body) {
-    return this.appService.estimatePrice(body);
+    return this.appService.estimatePrice(body)
   }
 }

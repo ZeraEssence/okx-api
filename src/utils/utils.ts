@@ -23,7 +23,7 @@ export class Utils {
     let volumeCounter : number = 0
     for (let i = 0; volumeCounter < volume; i++) {
       if (i === 400) {
-      throw new HttpException('Could not estimate price. Please, enter a lower volume', HttpStatus.BAD_REQUEST)
+      throw new HttpException('Could not estimate price. Please, enter a lower volume.', HttpStatus.BAD_REQUEST)
       }
       if (volumeCounter + +orderBook[i][1] > volume) {
         let volumeNeeded = +orderBook[i][1] + (( volume - +orderBook[i][1]) - volumeCounter)

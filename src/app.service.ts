@@ -58,9 +58,12 @@ export class AppService {
   }
 
   async executeOrder(orderId: number): Promise<{estimatedPrice: number, executedPrice: number}> {
+    if (orderId <= 0 || isNaN(orderId)) {
+      throw new HttpException('Estimated order not found. Please, provide a valid order id.', HttpStatus.BAD_REQUEST)
+    }
     const estimatedOrder = await EstimatedOrder.findOne({where: {id: orderId}})
     if (!estimatedOrder) {
-      throw new HttpException('Estimated order not found. Please, provide a valid orderId', HttpStatus.BAD_REQUEST)
+      throw new HttpException('Could not find an order with that order id. Please, provide another order id.', HttpStatus.BAD_REQUEST)
     } else if (new Date(estimatedOrder.expirationDate) < new Date()) {
       throw new HttpException('Estimated order expired. Please, request a new estimation.', HttpStatus.BAD_REQUEST)
     }
@@ -93,7 +96,7 @@ export class AppService {
       throw new HttpException('Could not estimate price. Please, verify the entered pair. It may be possible that the entered pair is not available.', HttpStatus.BAD_REQUEST)
     }
     if (body.side !== 'buy' && body.side !== 'sell') {
-      throw new HttpException('Could not estimate price. Please, enter a valid side (buy/sell)', HttpStatus.BAD_REQUEST)
+      throw new HttpException('Could not estimate price. Please, enter a valid side (buy/sell).', HttpStatus.BAD_REQUEST)
     }
     const estimatedPrice: number = +(this.utils.calculatePriceEstimation(body.volume, body.side, orderBooks).toFixed(5))
     if (!estimatedPrice) {
