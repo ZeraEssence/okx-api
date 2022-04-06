@@ -13,25 +13,28 @@ export class Utils {
       
   getExpirationDate(): Date {
     const date = new Date()
-    date.setSeconds(date.getSeconds() + 30)
+    date.setSeconds(date.getSeconds() + +process.env.EXPIRATION_SECONDS)
     return date
   }
 
   calculatePriceEstimation(volume: number, side: 'buy' | 'sell', orderBooks): number {
-    const orderBook = side === 'buy' ? orderBooks.bids : orderBooks.asks
+    const orderBook = side === 'buy' ? orderBooks.asks : orderBooks.bids
     const priceAndVolumeArr = []
-    let volumeCounter : number = 0
-    for (let i = 0; volumeCounter < volume; i++) {
+    let fulfilledVolume : number = 0
+    for (let i = 0; fulfilledVolume < volume; i++) {
+      // If the loop reaches to the end of the orderBook and still doesn't fulfill the requested volume, throw an exception
       if (i === 400) {
       throw new HttpException('Could not estimate price. Please, enter a lower volume.', HttpStatus.BAD_REQUEST)
       }
-      if (volumeCounter + +orderBook[i][1] > volume) {
-        let volumeNeeded = +orderBook[i][1] + (( volume - +orderBook[i][1]) - volumeCounter)
+      // If the current fulfilled volume + the volume of the next order surpasses the requested volume,
+      // it only takes the needed amount of it
+      if (fulfilledVolume + +orderBook[i][1] > volume) {
+        let volumeNeeded = +orderBook[i][1] + (( volume - +orderBook[i][1]) - fulfilledVolume)
         priceAndVolumeArr.push([+orderBook[i][0], volumeNeeded])
-        volumeCounter += volumeNeeded
+        fulfilledVolume += volumeNeeded
       } else {
         priceAndVolumeArr.push([+orderBook[i][0], +orderBook[i][1]])
-        volumeCounter += +orderBook[i][1]
+        fulfilledVolume += +orderBook[i][1]
       }
     }
     const ponderatedPrices = []

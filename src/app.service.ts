@@ -59,11 +59,11 @@ export class AppService {
 
   async executeOrder(orderId: number): Promise<{estimatedPrice: number, executedPrice: number}> {
     if (orderId <= 0 || isNaN(orderId)) {
-      throw new HttpException('Estimated order not found. Please, provide a valid order id.', HttpStatus.BAD_REQUEST)
+      throw new HttpException('Could not find an order with that order id. Please, provide a valid order id.', HttpStatus.BAD_REQUEST)
     }
     const estimatedOrder = await EstimatedOrder.findOne({where: {id: orderId}})
     if (!estimatedOrder) {
-      throw new HttpException('Could not find an order with that order id. Please, provide another order id.', HttpStatus.BAD_REQUEST)
+      throw new HttpException('Estimated order not found. Please, provide another order id.', HttpStatus.BAD_REQUEST)
     } else if (new Date(estimatedOrder.expirationDate) < new Date()) {
       throw new HttpException('Estimated order expired. Please, request a new estimation.', HttpStatus.BAD_REQUEST)
     }
@@ -72,7 +72,8 @@ export class AppService {
       "tdMode": "cash",
       "side": estimatedOrder.side,
       "ordType": "market",
-      "sz": estimatedOrder.volume
+      "sz": estimatedOrder.volume,
+      "tgtCcy": "base_ccy"
     }
 
     const OkxOrder = await this.placeOrder(body)

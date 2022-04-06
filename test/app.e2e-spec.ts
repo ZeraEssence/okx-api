@@ -122,7 +122,7 @@ describe('AppController (e2e)', () => {
       .expect(400)
       .then((response: any) => {
         expect(JSON.parse(response.text).message)
-        .toEqual('Estimated order not found. Please, provide a valid order id.')
+        .toEqual('Could not find an order with that order id. Please, provide a valid order id.')
       })
     });
 
@@ -135,7 +135,20 @@ describe('AppController (e2e)', () => {
       .expect(400)
       .then((response: any) => {
         expect(JSON.parse(response.text).message)
-        .toEqual('Could not find an order with that order id. Please, provide another order id.')
+        .toEqual('Estimated order not found. Please, provide another order id.')
+      })
+    });
+
+    it('inexisting order', () => {
+      return request(app.getHttpServer())
+      .post('/api/place-order')
+      .send({
+        "orderId": 1
+      })
+      .expect(400)
+      .then((response: any) => {
+        expect(JSON.parse(response.text).message)
+        .toEqual('Estimated order expired. Please, request a new estimation.')
       })
     });
   })
