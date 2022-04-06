@@ -15,15 +15,15 @@ This is an API that uses OKX API to estimate trade prices and execute orders.
 
     npm run test:e2e
     
-## ENV vars
+## Environment Variables
 
-    OKX_URL = API Url
-    API_KEY = API Key
-    SECRET_KEY = API Secret Key
-    OK_ACCESS_PASSPHRASE = API Passphrase
-    OPERATING_FEE= Desired fee to add to total price ( 0.01 = 1% )
-    SPREAD= Desired spread to add to total price ( 0.01 = 1% )
-    EXPIRATION_SECONDS= Seconds to add to order expiration date (Expiration date: Current date + EXPIRATION_SECONDS)
+    OKX_URL=
+    API_KEY=
+    SECRET_KEY=
+    OK_ACCESS_PASSPHRASE=
+    OPERATING_FEE= 0.0025
+    SPREAD= 0.005
+    EXPIRATION_SECONDS= 45
 
 # REST API
 
