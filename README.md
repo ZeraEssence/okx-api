@@ -1,6 +1,6 @@
 # OKX Exchange API
 
-This is an API that uses OKX to estimate trade prices and execute orders.
+This is an API that uses OKX API to estimate trade prices and execute orders.
 
 ## Install
 
