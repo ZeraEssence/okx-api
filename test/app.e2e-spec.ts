@@ -102,10 +102,10 @@ describe('AppController (e2e)', () => {
 
   })
 
-  describe('/POST api/place-order', () => {
+  describe('/POST api/execute-order', () => {
     it('return estimated price and executed price', () => {
       return request(app.getHttpServer())
-        .post('/api/place-order')
+        .post('/api/execute-order')
         .send({
           "orderId": orderId
       })
@@ -115,7 +115,7 @@ describe('AppController (e2e)', () => {
 
     it('invalid or empty order id', () => {
       return request(app.getHttpServer())
-      .post('/api/place-order')
+      .post('/api/execute-order')
       .send({
         "orderId": 0
       })
@@ -128,7 +128,7 @@ describe('AppController (e2e)', () => {
 
     it('inexisting order', () => {
       return request(app.getHttpServer())
-      .post('/api/place-order')
+      .post('/api/execute-order')
       .send({
         "orderId": 9999999
       })
@@ -141,7 +141,7 @@ describe('AppController (e2e)', () => {
 
     it('inexisting order', () => {
       return request(app.getHttpServer())
-      .post('/api/place-order')
+      .post('/api/execute-order')
       .send({
         "orderId": 1
       })

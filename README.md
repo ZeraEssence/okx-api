@@ -57,7 +57,7 @@ This endpoint receives an order ID, to execute an estimated order, with its pair
 
 ### Request
 
-`POST api/place-order/`
+`POST api/execute-order/`
 
     body: {
       orderId: 5
