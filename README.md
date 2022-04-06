@@ -46,7 +46,7 @@ This endpoint estimates a price given a pair, volume and side. It returns an est
 ### Response
 
     {
-      "estimatedPrice": 46263.9664875,
+      "estimatedPrice": 46263.96648,
       "expirationDate": "2022-04-05T18:48:57.537Z",
       "orderId": 5
     }
@@ -66,6 +66,6 @@ This endpoint receives an order ID, to execute an estimated order, with its pair
 ### Response
 
     {
-      "estimatedPrice": 46263.9664875,
-      "executedPrice": 46269.12733874999
+      "estimatedPrice": 46263.96648,
+      "executedPrice": 46269.12733
     }
